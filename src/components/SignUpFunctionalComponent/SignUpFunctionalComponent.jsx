@@ -10,13 +10,26 @@ const SignUpFunctionalComponent = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!firstName || !lastName || !email || !address || !platform) {
+      alert('Please fill in all the fields.');
+      return;
+    }
+
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!emailRegex.test(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
     alert(`Hello ${firstName}!`);
+  
   };
 
   return (
     <div className="text-light p-3">
       <h3 className="mb-3">Sign Up with Functional component</h3>
-      <hr/>
+      <hr />
       <form onSubmit={handleSubmit}>
         <div className="row mb-3">
           <div className="col">
@@ -26,6 +39,7 @@ const SignUpFunctionalComponent = () => {
             <input
               type="text"
               className="form-control form-control-dark text-light bg-dark"
+              required
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               id="firstName"
@@ -39,6 +53,7 @@ const SignUpFunctionalComponent = () => {
             <input
               type="text"
               className="form-control form-control-dark text-light bg-dark"
+              required
               id="lastName"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
@@ -53,6 +68,7 @@ const SignUpFunctionalComponent = () => {
           <input
             type="email"
             className="form-control form-control-dark text-light bg-dark"
+            required
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -65,6 +81,7 @@ const SignUpFunctionalComponent = () => {
           </label>
           <textarea
             className="form-control form-control-dark text-light bg-dark"
+            required
             id="address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}

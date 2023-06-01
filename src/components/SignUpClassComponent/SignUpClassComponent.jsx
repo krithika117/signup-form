@@ -33,9 +33,23 @@ class SignUpClassComponent extends Component {
     handlePlatformChange = (event) => {
         this.setState({platform: event.target.value});
     };
+
     handleSubmit = (event) => {
         event.preventDefault();
-        alert(`Hello ${this.state.firstName}!`);
+
+        const {firstName, lastName, email, address, platform} = this.state;
+        if (!firstName || !lastName || !email || !address || !platform) {
+            alert('Please fill in all the fields.');
+            return;
+        }
+        const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (!emailRegex.test(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        alert(`Hello ${firstName}!`);
+
     };
 
     render() {
@@ -53,6 +67,7 @@ class SignUpClassComponent extends Component {
                             <input
                                 type="text"
                                 className="form-control form-control-dark text-light bg-dark"
+                                required
                                 value={firstName}
                                 onChange={this.handleFirstNameChange}
                                 id="firstName"
@@ -65,6 +80,7 @@ class SignUpClassComponent extends Component {
                             <input
                                 type="text"
                                 className="form-control form-control-dark text-light bg-dark"
+                                required
                                 id="lastName"
                                 value={lastName}
                                 onChange={this.handleLastNameChange}
@@ -78,6 +94,7 @@ class SignUpClassComponent extends Component {
                         <input
                             type="email"
                             className="form-control form-control-dark text-light bg-dark"
+                            required
                             id="email"
                             value={email}
                             onChange={this.handleEmailChange}
@@ -89,6 +106,7 @@ class SignUpClassComponent extends Component {
                         </label>
                         <textarea
                             className="form-control form-control-dark text-light bg-dark"
+                            required
                             id="address"
                             value={address}
                             onChange={this.handleAddressChange}
